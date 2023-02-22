@@ -1,11 +1,16 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Update Json File values'
+description: 'This GitHub Action edits any value in a json file to the provided values'
+author: 'Restack'
 inputs:
-  milliseconds: # change this
+  file:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: "file name/path to edit. e.g 'package.json'"
+  values:
+    required: true
+    description: "values to replace. example: {'TEMPLATE_VALUE_HERE': 'value_to_replace_with', 'ANOTHER_TEMPLATE_VALUE': 'another_value_to_replace_with'}"
 runs:
   using: 'node16'
   main: 'dist/index.js'
+branding:
+  icon: 'layers'
+  color: 'purple'
