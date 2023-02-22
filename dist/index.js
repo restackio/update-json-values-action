@@ -70,14 +70,21 @@ run();
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const lodash_1 = __nccwpck_require__(250);
-const updateJson = (obj, values) => {
-    const keysToReplace = (0, lodash_1.keys)(values);
+const replaceKeys = (obj, replaceValues) => {
     for (const [key, value] of Object.entries(obj)) {
-        if (keysToReplace.includes(value)) {
-            (0, lodash_1.set)(obj, key, values[value]);
+        if ((0, lodash_1.isObject)(value)) {
+            replaceKeys(value, replaceValues);
+        }
+        else {
+            if (replaceValues[value]) {
+                (0, lodash_1.set)(obj, key, replaceValues[value]);
+            }
         }
     }
     return obj;
+};
+const updateJson = (obj, replaceValues) => {
+    return replaceKeys(obj, replaceValues);
 };
 exports.default = updateJson;
 
