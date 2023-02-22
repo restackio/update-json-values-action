@@ -1,15 +1,14 @@
-import {isObject, keys, set} from 'lodash';
+import {isObject, set} from 'lodash';
 
 const replaceKeys = (
   obj: Record<string, any>,
-  replaceValues: Record<string, any>,
-  keysToReplace: string[]
+  replaceValues: Record<string, any>
 ): Record<string, any> => {
   for (const [key, value] of Object.entries(obj)) {
     if (isObject(value)) {
-      replaceKeys(value, replaceValues, keysToReplace);
+      replaceKeys(value, replaceValues);
     } else {
-      if (keysToReplace.includes(value)) {
+      if (replaceValues[value]) {
         set(obj, key, replaceValues[value]);
       }
     }
@@ -21,8 +20,7 @@ const updateJson = (
   obj: Record<string, any>,
   replaceValues: Record<string, any>
 ): Record<string, any> => {
-  const keysToReplace = keys(replaceValues);
-  return replaceKeys(obj, replaceValues, keysToReplace);
+  return replaceKeys(obj, replaceValues);
 };
 
 export default updateJson;
