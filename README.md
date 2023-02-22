@@ -18,7 +18,7 @@ Add this step in your workflow file
 - `values`: Values to replace on the json: `{'TEMPLATE_VALUE_TO_REPLACE': 'value_here', 'ANOTHER_VALUE_TO_REPLACE: 'value_here'}`
 
 
-#### Example - Updating `package.json` Version
+#### Example - Updating values in a  `package.json` file
 
 ```yaml
 name: Build and Release
@@ -40,7 +40,7 @@ jobs:
     - name: Checkout code
     - uses: actions/checkout@v3
  
-    - name: Update package.json version
+    - name: Update package.json values
       uses: restackio/update-json-values-action@v1.0.0
       with:
         file: package.json
