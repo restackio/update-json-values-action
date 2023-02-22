@@ -22,4 +22,4 @@ jobs:
       - uses: ./
         with:
           file: ${{ github.workspace }}/.github/workflows/test.json
-          values: "{\"VALUE_TO_BE_REPLACED\": \"a new description\"}"
+          values: "{\"VALUE_TO_BE_REPLACED\": \"{'type': 'test_type'}\"}"
