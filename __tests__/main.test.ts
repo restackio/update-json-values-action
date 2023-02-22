@@ -1,29 +1,41 @@
-import {wait} from '../src/wait'
-import * as process from 'process'
-import * as cp from 'child_process'
-import * as path from 'path'
-import {expect, test} from '@jest/globals'
+import {expect, test} from '@jest/globals';
 
-test('throws invalid number', async () => {
-  const input = parseInt('foo', 10)
-  await expect(wait(input)).rejects.toThrow('milliseconds not a number')
-})
+import updateJsonValues from '../src/update-json-values';
 
-test('wait 500 ms', async () => {
-  const start = new Date()
-  await wait(500)
-  const end = new Date()
-  var delta = Math.abs(end.getTime() - start.getTime())
-  expect(delta).toBeGreaterThan(450)
-})
-
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = '500'
-  const np = process.execPath
-  const ip = path.join(__dirname, '..', 'lib', 'main.js')
-  const options: cp.ExecFileSyncOptions = {
-    env: process.env
-  }
-  console.log(cp.execFileSync(np, [ip], options).toString())
-})
+test('updates values in json from the values provided', async () => {
+  const obj = {
+    a: 'TEMPLATE_VALUE_HERE',
+    b: 'TEMPLATE_VALUE_HERE',
+    c: {
+      d: 'NESTED_TEMPLATE_VALUE_HERE'
+    },
+    e: {
+      f: {
+        g: 'TEMPLATE_VALUE_HERE',
+        h: {
+          i: 'NESTED_TEMPLATE_VALUE_HERE'
+        }
+      }
+    }
+  };
+  const values = {
+    TEMPLATE_VALUE_HERE: 'value_replaced',
+    NESTED_TEMPLATE_VALUE_HERE: 'nested_value_replaced'
+  };
+  const expectedObj = {
+    a: 'value_replaced',
+    b: 'value_replaced',
+    c: {
+      d: 'nested_value_replaced'
+    },
+    e: {
+      f: {
+        g: 'value_replaced',
+        h: {
+          i: 'nested_value_replaced'
+        }
+      }
+    }
+  };
+  expect(updateJsonValues(obj, values)).toEqual(expectedObj);
+});
