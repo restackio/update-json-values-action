@@ -1,3 +1,4 @@
+require('./sourcemap-register.js');
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_1 = require("lodash");
@@ -18,3 +19,4 @@ const updateJson = (obj, replaceValues) => {
     return replaceKeys(obj, replaceValues);
 };
 exports.default = updateJson;
+//# sourceMappingURL=update-json-values.js.map
