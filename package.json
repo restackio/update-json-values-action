@@ -5,12 +5,11 @@
   "description": "TypeScript template action",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run package && npm test"
+    "all": "npm run format && npm run package && npm test"
   },
   "repository": {
     "type": "git",
@@ -28,14 +27,9 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/lodash": "^4.17.13",
-    "@types/node": "^22.9.0",
     "@vercel/ncc": "^0.36.1",
     "jest": "^29.7.0",
     "js-yaml": "^4.1.0",
-    "prettier": "2.8.8",
-    "ts-jest": "^29.2.5",
-    "typescript": "^5.6.3"
+    "prettier": "2.8.8"
   }
 }

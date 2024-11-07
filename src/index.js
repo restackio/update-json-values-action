@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import updateJsonValues from './update-json-values';
 
-async function run(): Promise<void> {
+async function run() {
   try {
     const file = core.getInput('file', {required: true});
     const values = core.getInput('values', {required: true});
