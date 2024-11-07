@@ -1,7 +1,24 @@
 import * as core from '@actions/core';
 import fs from 'fs';
 
-import updateJsonValues from './update-json-values';
+import {isObject, set} from 'lodash';
+
+const replaceKeys = (obj, replaceValues) => {
+  for (const [key, value] of Object.entries(obj)) {
+    if (isObject(value)) {
+      replaceKeys(value, replaceValues);
+    } else {
+      if (replaceValues[value]) {
+        set(obj, key, replaceValues[value]);
+      }
+    }
+  }
+  return obj;
+};
+
+const updateJson = (obj, replaceValues) => {
+  return replaceKeys(obj, replaceValues);
+};
 
 async function run() {
   try {
@@ -10,7 +27,7 @@ async function run() {
 
     let data = fs.readFileSync(file, 'utf8');
     let obj = JSON.parse(data);
-    obj = updateJsonValues(obj, JSON.parse(values));
+    obj = updateJson(obj, JSON.parse(values));
 
     data = JSON.stringify(obj, null, 2);
     fs.writeFileSync(file, data, 'utf8');

@@ -20058,6 +20058,17 @@ module.exports = require("util");
 /******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__nccwpck_require__.nmd = (module) => {
@@ -20076,24 +20087,25 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(729);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(896);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(695);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 
-// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(729);
-// EXTERNAL MODULE: external "fs"
-var external_fs_ = __nccwpck_require__(896);
-var external_fs_default = /*#__PURE__*/__nccwpck_require__.n(external_fs_);
-// EXTERNAL MODULE: ./node_modules/lodash/lodash.js
-var lodash = __nccwpck_require__(695);
-;// CONCATENATED MODULE: ./src/update-json-values.js
+
+
 
 
 const replaceKeys = (obj, replaceValues) => {
   for (const [key, value] of Object.entries(obj)) {
-    if ((0,lodash.isObject)(value)) {
+    if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isObject)(value)) {
       replaceKeys(value, replaceValues);
     } else {
       if (replaceValues[value]) {
-        (0,lodash.set)(obj, key, replaceValues[value]);
+        (0,lodash__WEBPACK_IMPORTED_MODULE_2__.set)(obj, key, replaceValues[value]);
       }
     }
   }
@@ -20104,27 +20116,19 @@ const updateJson = (obj, replaceValues) => {
   return replaceKeys(obj, replaceValues);
 };
 
-/* harmony default export */ const update_json_values = (updateJson);
-
-;// CONCATENATED MODULE: ./src/index.js
-
-
-
-
-
 async function run() {
   try {
-    const file = core.getInput('file', {required: true});
-    const values = core.getInput('values', {required: true});
+    const file = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('file', {required: true});
+    const values = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('values', {required: true});
 
-    let data = external_fs_default().readFileSync(file, 'utf8');
+    let data = fs__WEBPACK_IMPORTED_MODULE_1___default().readFileSync(file, 'utf8');
     let obj = JSON.parse(data);
-    obj = update_json_values(obj, JSON.parse(values));
+    obj = updateJson(obj, JSON.parse(values));
 
     data = JSON.stringify(obj, null, 2);
-    external_fs_default().writeFileSync(file, data, 'utf8');
+    fs__WEBPACK_IMPORTED_MODULE_1___default().writeFileSync(file, data, 'utf8');
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
   }
 }
 
